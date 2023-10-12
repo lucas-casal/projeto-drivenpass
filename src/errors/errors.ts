@@ -12,7 +12,30 @@ const unauthorizedError = () :ApplicationError => {
         message: 'You must be signed in to continue',
     };
 }
+const unauthorizedLoginError = () :ApplicationError => {
+    return {
+        name: 'UnauthorizedError',
+        message: 'The password is incorrect',
+    };
+}
+const notFoundError = (source: string) :ApplicationError => {
+    return {
+        name: 'NotFoundError',
+        message: `${source} não encontrado(a)`
+    }
+}
+
+const conflictError = (source: string) => {
+    const comp = source ? '"' + source + '"' : "Valor digitado"
+    return {
+        name: 'ConflictError',
+        message: `${comp} já está em uso!`
+    }
+}
 export const errors = {
     unauthorizedError,
-    invalidDataError
+    unauthorizedLoginError,
+    invalidDataError,
+    notFoundError,
+    conflictError
 }

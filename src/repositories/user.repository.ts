@@ -10,6 +10,17 @@ const create = async (email: string, password: string) => {
     
     return result
 }
+
+const findByEmail = async (email: string) => {
+    const result = await prisma.user.findFirst({
+        where: {email}
+    })
+
+    return result
+}
+
+
 export const userRepository = {
-    create
+    create,
+    findByEmail,
 }

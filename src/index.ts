@@ -5,12 +5,14 @@ import { handleApplicationErrors } from './middlewares/error.handling.middleware
 import { userRouter } from './routers';
 import { database } from './config/database';
 import supertest from 'supertest';
+import credentialRouter from 'routers/credential.router';
 
 const app = express();
 app
     .use(cors())
     .use(express.json())
     .use('/users', userRouter)
+    .use('/credentials', credentialRouter)
     .use(handleApplicationErrors)
 
 export function init(): Promise<Express> {

@@ -5,18 +5,22 @@ type SessionUncheckedInput = {
     userId: number
 }
 
-async function createSession(data: SessionUncheckedInput) {
-  return prisma.session.create({
+const createSession = async (data: SessionUncheckedInput) => {
+  const session = await prisma.session.create({
     data,
   });
+
+  return session
 }
 
-async function findSession(token: string) {
-  return prisma.session.findFirst({
+const findSession = async (token: string) => {
+  const session = await prisma.session.findFirst({
     where: {
       token,
     },
   });
+
+  return session;
 }
 
 export const authenticationRepository = {
