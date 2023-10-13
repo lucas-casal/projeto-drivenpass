@@ -1,17 +1,20 @@
 import { prisma } from "config/database"
 import { createBody } from "services/credential.service"
 
+const findByCredentialId = async (id: number) => {
+    const credential = await prisma.credential.findFirst({
+        where: {id}
+    })
+
+    return credential
+}
+
 const findByUserId = async (userId: number) => {
     const result = await prisma.credential.findMany({
         where: {userId}
     })
 
-    const titles = []
-    result.map(x => {
-        titles.push(x.title)
-    })
-
-    return titles
+    return result
 }
 
 const create = async (data: createBody) => {
@@ -30,5 +33,6 @@ const create = async (data: createBody) => {
 
 export const credentialRepository = {
     create,
-    findByUserId
+    findByUserId,
+    findByCredentialId
 }

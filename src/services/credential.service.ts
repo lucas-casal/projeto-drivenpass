@@ -14,15 +14,38 @@ export type createBody = {
 const create = async (userId: number, body: createBody) => {
     const {title, url, username, password} = body
 
-    const titles: string[] = await credentialRepository.findByUserId(userId)
+    const credentials = await credentialRepository.findByUserId(userId)
+    
+    const titles = []
+    credentials.map(x => {
+        titles.push(x.title)
+    })
+    
     if(titles.indexOf(title) >= 0) throw errors.conflictError(title)
-
+    
     const hash = cryptr.encrypt(password)
     
     const credential = await credentialRepository.create({userId, title, url, username, password: hash})
 
     return credential
-}   
+}  
+
+    const getAll = async (userId: number) => {
+    const credentials = await credentialRepository.findByUserId(userId) || []
+
+    return credentials;
+}
+    const getOne = async (credentialId: number, userId: number) => {
+    const credential = await credentialRepository.findByCredentialId(credentialId)
+
+    if (!credential) throw errors.notFoundError('Credencial')
+
+    if (credential.userId !== userId) throw errors.unauthorizedError()
+
+    return credential;
+}
 export const credentialService = {
-    create
+    create,
+    getAll,
+    getOne
 }

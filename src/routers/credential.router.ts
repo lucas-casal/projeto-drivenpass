@@ -6,5 +6,7 @@ const credentialRouter = Router();
 
 credentialRouter.all('/*', authenticateToken)
     .post('/register', credentialController.create)
-
+    .get('/', credentialController.getAll)
+    .get('/:credentialId', credentialController.getOne)
+    
 export default credentialRouter;
