@@ -14,7 +14,6 @@ const createSession = async (data: SessionUncheckedInput) => {
 }
 
 const findSession = async (token: string) => {
-  console.log('find ' + token)
   const session = await prisma.session.findFirst({
     where: {
       token,
@@ -23,7 +22,6 @@ const findSession = async (token: string) => {
 
   const sessions = await prisma.session.findMany({});
 
-  console.log(sessions)
   return session;
 }
 

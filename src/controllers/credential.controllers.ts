@@ -33,7 +33,7 @@ const deleteOne = async (req: AuthenticatedRequest, res: Response) => {
     const {userId} = req;
 
     const credential = await credentialService.deleteOne(Number(credentialId), userId)
-
+console.log(`"${credential.title}" excluída com sucesso`)
     res.status(httpStatus.OK).send(`"${credential.title}" excluída com sucesso`)
 }
 export const credentialController = {

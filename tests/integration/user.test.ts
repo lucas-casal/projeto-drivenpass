@@ -1,10 +1,8 @@
 import { cleanDb, database } from 'config/database';
 import { init, server } from 'index';
 import { userFactory } from '../factories/user.factory';
-
 beforeAll(async () => {
   await init();
-  await cleanDb()
 });
 
 beforeEach(async () => {
@@ -12,9 +10,8 @@ beforeEach(async () => {
 });
 
 
-afterAll(async () => {
-  await database.cleanDb();
-});
+
+
 
 describe('criação de usuário', () => {
   describe( 'erros', () => {

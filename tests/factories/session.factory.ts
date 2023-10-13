@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Session, User } from '@prisma/client';
 import { userFactory } from './user.factory';
-import { prisma } from 'config/database';
+import { prisma } from '../../src/config/database';
 
 const generateToken = async (user?: User) => {
     const incomingUser = user || (await userFactory.create());
@@ -15,8 +15,6 @@ const create = async (data: Omit<Session, 'id'>) => {
         data
     })
 
-    const sessionA = await prisma.session.findMany({})
-    console.log(sessionA)
     return session
 }
 

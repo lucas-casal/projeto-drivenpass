@@ -33,13 +33,18 @@ const create = async (userId: number, body: createBody) => {
 const getAll = async (userId: number) => {
     const credentials = await credentialRepository.findByUserId(userId) || []
     credentials.map(async x => {
+        console.log(x.password)
+
         x.password = await cryptr.decrypt(x.password)
+        console.log(x.password)
     })
     return credentials;
 }
 
 
 const getOne = async (credentialId: number, userId: number) => {
+    if (credentialId > 2147483647) throw errors.notFoundError('Credencial')
+    
     const credential = await credentialRepository.findByCredentialId(credentialId)
 
     if (!credential) throw errors.notFoundError('Credencial')
@@ -52,10 +57,10 @@ const getOne = async (credentialId: number, userId: number) => {
 }
 
 const deleteOne = async (credentialId: number, userId: number) => {
+    if (credentialId > 2147483647) throw errors.notFoundError('Credencial')
+
     const credential = await credentialRepository.findByCredentialId(credentialId)
-
     if (!credential) throw errors.notFoundError('Credencial')
-
     if (credential.userId !== userId) throw errors.unauthorizedError()
 
     await credentialRepository.deleteByCredentialId(credentialId)

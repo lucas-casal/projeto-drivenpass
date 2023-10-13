@@ -22,7 +22,7 @@ const createCredential = async (id: number, params: Partial<createBody> = {})=> 
       url: url
     }});
 
-  return credential;
+  return {credential, incomingPassword};
 }
 
 const generateCredential = async ()=> {
