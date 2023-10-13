@@ -5,14 +5,18 @@ import { authenticationRepository } from '../repositories/authentication.reposit
 
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');
+  console.log(authHeader)
   if (!authHeader) throw errors.unauthorizedError();
 
   const token = authHeader.split(' ')[1];
-  if (!token) throw errors.unauthorizedError();
+  console.log(token)
 
+  if (!token) throw errors.unauthorizedError();
+  
   const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
 
   const session = await authenticationRepository.findSession(token);
+  console.log(session)
   if (!session) throw errors.unauthorizedError();
 
   req.userId = userId;

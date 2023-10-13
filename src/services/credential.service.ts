@@ -30,22 +30,44 @@ const create = async (userId: number, body: createBody) => {
     return credential
 }  
 
-    const getAll = async (userId: number) => {
+const getAll = async (userId: number) => {
     const credentials = await credentialRepository.findByUserId(userId) || []
-
+    credentials.map(async x => {
+        x.password = await cryptr.decrypt(x.password)
+    })
     return credentials;
 }
-    const getOne = async (credentialId: number, userId: number) => {
+
+
+const getOne = async (credentialId: number, userId: number) => {
     const credential = await credentialRepository.findByCredentialId(credentialId)
 
     if (!credential) throw errors.notFoundError('Credencial')
 
     if (credential.userId !== userId) throw errors.unauthorizedError()
 
+    credential.password = cryptr.decrypt(credential.password)
+
     return credential;
 }
+
+const deleteOne = async (credentialId: number, userId: number) => {
+    const credential = await credentialRepository.findByCredentialId(credentialId)
+
+    if (!credential) throw errors.notFoundError('Credencial')
+
+    if (credential.userId !== userId) throw errors.unauthorizedError()
+
+    await credentialRepository.deleteByCredentialId(credentialId)
+
+    return credential;
+}
+
+
+
 export const credentialService = {
     create,
     getAll,
-    getOne
+    getOne,
+    deleteOne
 }

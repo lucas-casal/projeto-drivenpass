@@ -15,11 +15,9 @@ const create = async (email: string, password: string) => {
 
 const login = async (email: string, password: string) => {
     const user = await userRepository.findByEmail(email)
-    
     if (!user) throw errors.notFoundError('usuário')
-
     if(!bcrypt.compareSync(password, user.password)) throw errors.unauthorizedLoginError()
-
+    
     const token = await helper.generateToken(user)
     const session = await authenticationRepository.createSession({token, userId: user.id})
     

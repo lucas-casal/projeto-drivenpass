@@ -16,12 +16,12 @@ app
     .use(handleApplicationErrors)
 
 export function init(): Promise<Express> {
-    database.connect();
+    database.connectDb();
     return Promise.resolve(app);
 }
     
 export async function close(): Promise<void> {
-    await database.disconnect();
+    await database.disconnectDB();
 }
 
 export const server = supertest(app)

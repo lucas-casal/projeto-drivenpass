@@ -1,22 +1,22 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 export let prisma: PrismaClient;
-const connect = (): void  => {
+export function connectDb(): void {
   prisma = new PrismaClient();
 }
 
-const disconnect = async (): Promise<void> => {
+export async function disconnectDB(): Promise<void> {
   await prisma?.$disconnect();
 }
 
-const clean = async (): Promise<void> => {
-  await prisma.session.deleteMany({});
+export async function cleanDb() {
   await prisma.credential.deleteMany({});
+  await prisma.session.deleteMany({});
   await prisma.user.deleteMany({});
 }
 
 export const database = {
-  connect,
-  disconnect,
-  clean
+  connectDb,
+  disconnectDB,
+  cleanDb
 }

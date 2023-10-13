@@ -1,6 +1,6 @@
 import { prisma } from '../config/database';
 
-type SessionUncheckedInput = {
+export type SessionUncheckedInput = {
     token: string,
     userId: number
 }
@@ -14,12 +14,16 @@ const createSession = async (data: SessionUncheckedInput) => {
 }
 
 const findSession = async (token: string) => {
+  console.log('find ' + token)
   const session = await prisma.session.findFirst({
     where: {
       token,
     },
   });
 
+  const sessions = await prisma.session.findMany({});
+
+  console.log(sessions)
   return session;
 }
 

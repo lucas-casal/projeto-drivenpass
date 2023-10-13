@@ -1,6 +1,11 @@
 import { prisma } from "config/database"
 import { createBody } from "services/credential.service"
 
+const deleteByCredentialId = async (id: number) => {
+    await prisma.credential.delete({
+        where: {id}
+    })
+}
 const findByCredentialId = async (id: number) => {
     const credential = await prisma.credential.findFirst({
         where: {id}
@@ -28,11 +33,12 @@ const create = async (data: createBody) => {
         }
     })
 
-    return result.title
+    return result
 }
 
 export const credentialRepository = {
     create,
     findByUserId,
-    findByCredentialId
+    findByCredentialId,
+    deleteByCredentialId
 }

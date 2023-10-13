@@ -1,13 +1,19 @@
-import { database } from 'config/database';
-import { server } from 'index';
+import { cleanDb, database } from 'config/database';
+import { init, server } from 'index';
 import { userFactory } from '../factories/user.factory';
 
 beforeAll(async () => {
-  await database.connect();
+  await init();
+  await cleanDb()
 });
 
 beforeEach(async () => {
-  await database.clean();
+  await database.cleanDb();
+});
+
+
+afterAll(async () => {
+  await database.cleanDb();
 });
 
 describe('criação de usuário', () => {

@@ -26,13 +26,15 @@ model Session {
   userId Int 
   token String
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 
 }
 
 model Credential {
   id       Int    @id @default(autoincrement())
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   title    String
   url      String
   username String
