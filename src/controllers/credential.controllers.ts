@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import { credentialService } from "services/credential.service";
+import { credentialService } from "../services/credential.service";
 import { Response } from "express";
-import { AuthenticatedRequest } from "middlewares/authentication.middleware";
+import { AuthenticatedRequest } from "../middlewares/authentication.middleware";
 
 const create = async (req: AuthenticatedRequest, res: Response) => {
     const {userId} = req;

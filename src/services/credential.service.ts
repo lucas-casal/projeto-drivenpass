@@ -1,6 +1,6 @@
-import { errors } from "errors/errors"
-import { cryptr } from "helpers"
-import { credentialRepository } from "repositories/credential.repository"
+import { errors } from "../errors/errors"
+import { cryptr } from "../helpers"
+import { credentialRepository } from "../repositories/credential.repository"
 
 ////////////////////////////////////////////////////////
 export type createBody = {

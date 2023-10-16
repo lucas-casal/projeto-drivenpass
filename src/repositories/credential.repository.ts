@@ -1,5 +1,5 @@
-import { prisma } from "config/database"
-import { createBody } from "services/credential.service"
+import { prisma } from "../config/database"
+import { createBody } from "../services/credential.service"
 
 const deleteByCredentialId = async (id: number) => {
     await prisma.credential.delete({
